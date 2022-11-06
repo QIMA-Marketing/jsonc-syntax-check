@@ -12,11 +12,20 @@ use JSON::PP;
 # On success, we exit with 0. On fail, we print the list of *.jsonc files that
 # can't be compiled, and exit with a status of -1.
 
-my @files = @ARGV;
+print Dumper \@ARGV;
+
+__END__
+my ($file_regex) = @ARGV;
+
+$file_regex //= '*.jsonc$';
 
 my @compile_failed;
 my $error = 0;
 
+my @files = File::Find::Rule
+    ->file
+    ->name($file_regex)
+    ->in
 for my $file (@files) {
     my $open_success = open my $fh, '<', $file;
 

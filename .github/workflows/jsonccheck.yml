@@ -2,8 +2,8 @@ name: JSON comments check
 
 on:
   push:
-#    paths:
-#      - '**.jsonc'
+    paths:
+      - '**.jsonc'
   pull_request:
 
 jobs:
