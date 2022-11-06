@@ -9,10 +9,8 @@ RUN mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
 
-#COPY jsonc_syntax_check /usr/src/app
-COPY . .
-
-RUN ls -la /usr/src/app
+COPY jsonc_syntax_check /usr/src/app
+#COPY . .
 
 RUN chmod +x /usr/src/app/jsonc_syntax_check
 
