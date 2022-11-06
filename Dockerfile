@@ -4,6 +4,8 @@ LABEL maintainer "Steve Bertrand <steveb@cpan.org>"
 
 ENV DEBUG=0
 
+RUN cpanm --no-test File::Find::Rule
+
 RUN mkdir -p /data
 RUN mkdir -p /usr/src/app
 

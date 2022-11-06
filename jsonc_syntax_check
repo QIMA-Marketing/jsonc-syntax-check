@@ -3,6 +3,7 @@
 use warnings;
 use strict;
 
+use File::Find::Rule;
 use JSON::PP;
 
 # This script accepts a list of JSON Comment files as arguments. It processes
@@ -14,9 +15,74 @@ use JSON::PP;
 my @files = @ARGV;
 
 my @compile_failed;
+my $error = 0;
 
 for my $file (@files) {
+    my $open_success = open my $fh, '<', $file;
 
+    my $data_less_comments;
+
+    if (! $open_success) {
+        push @compile_failed, $file;
+        $error = 1;
+        next;
+    }
+
+    my $clean_json_data;
+
+    while (my $line = <$fh>) {
+        $clean_json_data .= strip_comments($line);
+    }
+
+    print $clean_json_data;
+}
+
+sub strip_comments{
+    my ($line) = @_;
+
+    my $prev_char = '';
+    my $outside_quotes = 1;
+    my $is_unescaped = 1;
+    my $comment_start;
+
+    my @chars = split(//, $line);
+    my $len = @chars;
+    my $i = 0;
+
+    while ($i < $len) {
+        my $c = $chars[$i];
+
+        if ($is_unescaped){
+            if ($c eq '\\'){
+                $is_unescaped = 0;
+            }
+            elsif ($c eq '"') {
+                $outside_quotes = !$outside_quotes;
+            }
+            elsif ($c eq '/'
+                and $prev_char eq '/'
+                and $outside_quotes) {
+                $comment_start = $i-1;
+                last;
+            }
+        }
+        else {
+            $is_unescaped = 1;
+        }
+
+        $prev_char = $c;
+        $i++;
+    }
+
+    defined $comment_start
+        and $line = substr($line, 0, $comment_start) . "\n";
+
+    return $line;
+}
+sub fail {
+    my ($msg) = @_;
+    warn "$msg\n" if $msg;
+    exit -1;
 }
 
 exit 0;
