@@ -2,8 +2,8 @@ name: JSON check
 
 on:
   push:
-#    paths:
-#      - '**.jsonc'
+    paths:
+      - '**.jsonc'
   pull_request:
 
 jobs:

@@ -1,4 +1,4 @@
-name: JSON check
+name: JSON comments check
 
 on:
   push:
