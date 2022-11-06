@@ -3,8 +3,20 @@
 use warnings;
 use strict;
 
-use Data::Dumper;
+use JSON::PP;
+
+# This script accepts a list of JSON Comment files as arguments. It processes
+# over them to ensure they are syntactically correct.
+
+# On success, we exit with 0. On fail, we print the list of *.jsonc files that
+# can't be compiled, and exit with a status of -1.
+
 my @files = @ARGV;
 
-print Dumper \@files;
+my @compile_failed;
+
+for my $file (@files) {
+
+}
+
 exit 0;
