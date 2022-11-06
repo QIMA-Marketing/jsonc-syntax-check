@@ -3,4 +3,6 @@
 use warnings;
 use strict;
 
-return 1;
+my @files = @ARGV;
+
+exit 0;
