@@ -39,6 +39,7 @@ sub compile {
     for my $file (@$files) {
         # If files are sent in from another Action, they might have an
         # incorrect extension. Skip them
+
         next if $file !~ m|qr/${pattern}$/|;
 
         my $open_success = open my $fh, '<', $file;
