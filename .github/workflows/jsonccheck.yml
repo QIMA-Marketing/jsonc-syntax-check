@@ -14,4 +14,4 @@ jobs:
       - name: jsonc-syntax-check
         uses: stevieb9/jsonc-syntax-check@0.04
         with:
-          pattern: "\\.jsonc$"
+          pattern: "*.jsonc$"

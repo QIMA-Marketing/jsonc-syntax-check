@@ -1,17 +1,19 @@
 name: 'jsonc-syntax-check'
 description: 'Perform a syntax check on JSON-Comments (jsonc) files'
 author: 'Steve Bertrand <steveb@cpanm.org>'
+
 inputs:
   pattern:
     description: 'File regex pattern to check syntax against'
     required: true
-    default: '\\.jsonc$'
+    default: '*.jsonc$'
+
 outputs:
   failed_files:
-    description: 'File paths whose syntax check failed'
+    description: "File paths whose syntax check failed"
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"
   args:
     - ${{ inputs.pattern }}
 branding:
