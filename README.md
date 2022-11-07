@@ -26,7 +26,7 @@ Table of Contents
         steps:
           - uses: actions/checkout@v2
           - name: jsonc-syntax-check
-            uses: stevieb9/jsonc-syntax-check@0.11
+            uses: stevieb9/jsonc-syntax-check@1.00
               with:
                 pattern: "*.jsonc"
 
@@ -53,7 +53,7 @@ Table of Contents
             format: csv
 
         - name: jsonc-syntax-check
-          uses: stevieb9/jsonc-syntax-check@0.11
+          uses: stevieb9/jsonc-syntax-check@1.00
           with:
             pattern: "*.jsonc"
             files: ${{ steps.changed_files.outputs.
