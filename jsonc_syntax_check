@@ -37,6 +37,8 @@ sub compile {
     my ($files) = @_;
 
     for my $file (@$files) {
+        # If files are sent in from another Action, they might have an
+        # incorrect extension. Skip them
         next if $file !~ /$pattern/;
 
         my $open_success = open my $fh, '<', $file;
