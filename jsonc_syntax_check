@@ -28,6 +28,7 @@ for (@compile_failed) {
     print "$_ failed a syntax check\n";
 }
 
+# Explicitly exit so Github Actions will know our status
 exit $status;
 
 sub compile {
