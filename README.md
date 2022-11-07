@@ -11,6 +11,8 @@ Table of Contents
 
 ## Check all files
 
+    # jsonc-syntax-check.yml
+
     name: JSON comments check
 
     on:
@@ -30,6 +32,8 @@ Table of Contents
 
 ## Check only added/modified files
 
+    # jsonc-syntax-check.yml
+    
     name: JSON comments check
 
     on:
