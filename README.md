@@ -56,4 +56,4 @@ Table of Contents
           uses: stevieb9/jsonc-syntax-check@1.00
           with:
             pattern: "*.jsonc"
-            files: ${{ steps.changed_files.outputs.
+            files: ${{ steps.changed_files.outputs.added_modified }}
