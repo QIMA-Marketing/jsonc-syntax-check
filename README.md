@@ -16,19 +16,19 @@ Table of Contents
     name: JSON comments check
 
     on:
-    push:
-    paths:
-      - '**.jsonc'
+      push:
+        paths:
+          - '**.jsonc'
 
     jobs:
-    test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: jsonc-syntax-check
-      uses: stevieb9/jsonc-syntax-check@0.11
-      with:
-        pattern: "*.jsonc"
+      test:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v2
+          - name: jsonc-syntax-check
+            uses: stevieb9/jsonc-syntax-check@0.11
+              with:
+                pattern: "*.jsonc"
 
 ## Check only added/modified files
 
@@ -37,7 +37,9 @@ Table of Contents
     name: JSON comments check
 
     on:
-      push:
+      push:    
+        paths:
+          - '**.jsonc'
       pull_request:
 
     jobs:
