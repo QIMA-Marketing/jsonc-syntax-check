@@ -3,6 +3,7 @@
 use warnings;
 use strict;
 
+use Data::Dumper;
 use File::Find::Rule;
 use JSON::PP;
 
@@ -12,40 +13,57 @@ use JSON::PP;
 # On success, we exit with 0. On fail, we print the list of *.jsonc files that
 # can't be compiled, and exit with a status of -1.
 
-print Dumper \@ARGV;
+my $pattern = $ARGV[0];
 
-__END__
-my ($file_regex) = @ARGV;
+my $dir = $ENV{GITHUB_WORKSPACE};
 
-$file_regex //= '*.jsonc$';
+print "** $dir **\n";
+my $files = find_files($dir, $pattern);
 
 my @compile_failed;
-my $error = 0;
+my $status = 0; # Start with success status
 
-my @files = File::Find::Rule
-    ->file
-    ->name($file_regex)
-    ->in
-for my $file (@files) {
-    my $open_success = open my $fh, '<', $file;
+compile($files);
 
-    my $data_less_comments;
-
-    if (! $open_success) {
-        push @compile_failed, $file;
-        $error = 1;
-        next;
-    }
-
-    my $clean_json_data;
-
-    while (my $line = <$fh>) {
-        $clean_json_data .= strip_comments($line);
-    }
-
-    print $clean_json_data;
+for (@compile_failed) {
+    print "$_ failed a syntax check\n";
 }
 
+exit $status;
+
+sub compile {
+    my ($files) = @_;
+
+    for my $file (@$files) {
+        my $open_success = open my $fh, '<', $file;
+
+        my $data_less_comments;
+
+        if (! $open_success) {
+            push @compile_failed, $file;
+            $status = -1;
+            next;
+        }
+
+        my $clean_json_data;
+
+        while (my $line = <$fh>) {
+            $clean_json_data .= strip_comments($line);
+        }
+
+        my $perl;
+
+        my $decoded_ok = eval {
+            $perl = decode_json($clean_json_data);
+        };
+
+        if (! $decoded_ok || ! ref $perl) {
+            push @compile_failed, $file;
+            $status = -1;
+            next;
+        }
+    }
+}
 sub strip_comments{
     my ($line) = @_;
 
@@ -88,6 +106,17 @@ sub strip_comments{
 
     return $line;
 }
+sub find_files {
+    my ($dir, $pattern) = @_;
+
+    my @files = File::Find::Rule
+        ->file
+        ->name($pattern)
+        ->in($dir);
+
+    return \@files;
+}
+
 sub fail {
     my ($msg) = @_;
     warn "$msg\n" if $msg;

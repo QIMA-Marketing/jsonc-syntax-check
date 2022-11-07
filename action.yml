@@ -6,7 +6,7 @@ inputs:
   pattern:
     description: 'File regex pattern to check syntax against'
     required: true
-    default: '*.jsonc$'
+    default: '*.jsonc'
 
 outputs:
   failed_files:
