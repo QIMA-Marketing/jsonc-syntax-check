@@ -37,23 +37,21 @@ Table of Contents
     name: JSON comments check
 
     on:
-    push:
-    paths:
-      - '**.jsonc'
-    pull_request:
+      push:
+      pull_request:
 
     jobs:
-    test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - id: changed_files
-      uses: jitterbit/get-changed-files@v1
-      with:
-        format: csv
+      test:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v2
+        - id: changed_files
+          uses: jitterbit/get-changed-files@v1
+          with:
+            format: csv
 
-    - name: jsonc-syntax-check
-      uses: stevieb9/jsonc-syntax-check@0.11
-      with:
-        pattern: "*.jsonc"
-        files: ${{ steps.changed_files.outputs.
+        - name: jsonc-syntax-check
+          uses: stevieb9/jsonc-syntax-check@0.11
+          with:
+            pattern: "*.jsonc"
+            files: ${{ steps.changed_files.outputs.
