@@ -41,8 +41,6 @@ sub compile {
 
         my $open_success = open my $fh, '<', $file;
 
-        my $data_less_comments;
-
         if (! $open_success) {
             push @compile_failed, $file;
             $status = -1;
