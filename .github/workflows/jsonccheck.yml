@@ -11,7 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - id: changed_files
+        uses: jitterbit/get-changed-files@v1
+        with:
+          format: csv
+
       - name: jsonc-syntax-check
         uses: stevieb9/jsonc-syntax-check@0.10
         with:
           pattern: "*.jsonc"
+          files: ${{ steps.changed_files.outputs.added_modified }}

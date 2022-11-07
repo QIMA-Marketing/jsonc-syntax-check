@@ -7,15 +7,21 @@ inputs:
     description: 'File regex pattern to check syntax against'
     required: true
     default: '*.jsonc'
+  files:
+    description: 'List of files to operate on'
+    required: false
 
 outputs:
   failed_files:
     description: "File paths whose syntax check failed"
+
 runs:
   using: "docker"
   image: "Dockerfile"
   args:
     - ${{ inputs.pattern }}
+    - ${{ inputs.files }}
+
 branding:
   icon: bell
   color: green
