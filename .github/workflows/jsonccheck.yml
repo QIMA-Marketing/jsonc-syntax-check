@@ -12,6 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: jsonc-syntax-check
-        uses: stevieb9/jsonc-syntax-check@0.09
+        uses: stevieb9/jsonc-syntax-check@0.10
         with:
           pattern: "*.jsonc"
