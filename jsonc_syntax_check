@@ -15,15 +15,11 @@ use JSON::PP;
 
 my ($pattern, @files) = @ARGV;
 
-print Dumper \@files;
-
 my $dir = $ENV{GITHUB_WORKSPACE};
 
 if (! @files) {
     @files = find_files($dir, $pattern);
 }
-
-print Dumper \@files;
 
 my @compile_failed;
 my $status = 0; # Start with success status

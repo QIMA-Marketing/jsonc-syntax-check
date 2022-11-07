@@ -1,2 +1,9 @@
+# Local testing
 
-docker build . -t jsonc-syntax-check ; docker run --rm -it -e "GITHUB_WORKSPACE=." -v $(pwd)/testing/:/data/ jsonc-syntax-check:latest '*.jsonc'
+# Build the docker container
+
+docker build . -t jsonc-syntax-check
+
+# Execute
+
+docker run --rm -it -e "GITHUB_WORKSPACE=." -v $(pwd)/testing/:/data/ jsonc-syntax-check:latest '*.jsonc'
