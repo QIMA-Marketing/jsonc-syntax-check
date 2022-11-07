@@ -64,6 +64,16 @@ sub compile {
         }
     }
 }
+sub find_files {
+    my ($dir, $pattern) = @_;
+
+    my @files = File::Find::Rule
+        ->file
+        ->name($pattern)
+        ->in($dir);
+
+    return \@files;
+}
 sub strip_comments{
     my ($line) = @_;
 
@@ -106,21 +116,3 @@ sub strip_comments{
 
     return $line;
 }
-sub find_files {
-    my ($dir, $pattern) = @_;
-
-    my @files = File::Find::Rule
-        ->file
-        ->name($pattern)
-        ->in($dir);
-
-    return \@files;
-}
-
-sub fail {
-    my ($msg) = @_;
-    warn "$msg\n" if $msg;
-    exit -1;
-}
-
-exit 0;
