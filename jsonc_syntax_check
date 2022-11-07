@@ -17,7 +17,6 @@ my $pattern = $ARGV[0];
 
 my $dir = $ENV{GITHUB_WORKSPACE};
 
-print "** $dir **\n";
 my $files = find_files($dir, $pattern);
 
 my @compile_failed;
