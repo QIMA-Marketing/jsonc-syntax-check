@@ -37,6 +37,8 @@ sub compile {
     my ($files) = @_;
 
     for my $file (@$files) {
+        next if $file !~ /$pattern/;
+
         my $open_success = open my $fh, '<', $file;
 
         my $data_less_comments;
