@@ -2,7 +2,7 @@
 
 This Action tests the validity of jsonc (ie. JSON - Comments) files.
 
-It does this by running a Perl script inside of a Docker container.
+It does this by running a Perl script inside a Docker container.
 
 Table of Contents
 
