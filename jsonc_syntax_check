@@ -13,18 +13,22 @@ use JSON::PP;
 # On success, we exit with 0. On fail, we print the list of *.jsonc files that
 # can't be compiled, and exit with a status of -1.
 
-my ($pattern, @files) = @ARGV;
+my ($pattern, $files) = @ARGV;
 
 my $dir = $ENV{GITHUB_WORKSPACE};
+my @file_list;
 
-if (! @files) {
-    @files = find_files($dir, $pattern);
+if (! $files) {
+    @file_list = find_files($dir, $pattern);
+}
+else {
+    @file_list = split /,/, $files;
 }
 
 my @compile_failed;
 my $status = 0; # Start with success status
 
-compile(\@files);
+compile(\@file_list);
 
 for (@compile_failed) {
     print "$_ failed a syntax check\n";
@@ -40,7 +44,16 @@ sub compile {
         # If files are sent in from another Action, they might have an
         # incorrect extension. Skip them
 
-        next if $file !~ m|qr/${pattern}$/|;
+        if ($pattern =~ m|\.| && $pattern !~ m|\\|) {
+            # We need to escape the dot for regex matching
+            $pattern =~ s|\.|\\\.|g;
+        }
+        if ($pattern =~ m|\*| && $pattern !~ m|\.\*|) {
+            # We need to have something for the quantifier to adhere to
+            $pattern =~ s|\*|\.\*|g;
+        }
+
+        next if $file !~ m|${pattern}$|;
 
         my $open_success = open my $fh, '<', $file;
 
