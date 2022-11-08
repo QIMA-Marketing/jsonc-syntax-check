@@ -7,8 +7,12 @@ use Data::Dumper;
 use File::Find::Rule;
 use JSON::PP;
 
-# This script accepts a list of JSON Comment files as arguments. It processes
-# over them to ensure they are syntactically correct.
+# This script loads *.jsonc files and ensures their validity by parsing and
+# loading them.
+
+# A file glob pattern is required as the first argument. If a second argument
+# (a comma separated string of filenames) is sent in, we'll operate only on
+# those files. Otherwise, we'll find all files that match the file glob pattern.
 
 # On success, we exit with 0. On fail, we print the list of *.jsonc files that
 # can't be compiled, and exit with a status of -1.
