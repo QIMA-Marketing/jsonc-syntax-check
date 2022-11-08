@@ -21,7 +21,7 @@ Table of Contents
           - '**.jsonc'
 
     jobs:
-      test:
+      jsonc_syntax_check:
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v2
@@ -43,7 +43,7 @@ Table of Contents
       pull_request:
 
     jobs:
-      test:
+      jsonc_syntax_check:
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v2
